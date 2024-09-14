@@ -160,24 +160,24 @@ function Header() {
                   >
                     Your Profile
                   </Link>
-                  <a
-                    href="#"
+                  <Link
+                    to="/settings"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
                     tabindex="-1"
                     id="user-menu-item-1"
                   >
                     Settings
-                  </a>
-                  <a
-                    href="#"
+                  </Link>
+                  <Link
+                    to="/login"
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"
                     tabindex="-1"
                     id="user-menu-item-2"
                   >
                     Sign out
-                  </a>
+                  </Link>
                 </div>
               ) : (
                 <></>

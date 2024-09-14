@@ -3,15 +3,13 @@ import AccountInput from "./AccountInput";
 import { useForm } from "react-hook-form";
 
 function AccountSetting() {
-  const { handleSubmit, register, watch } = useForm();
+  const { handleSubmit, register, watch, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
-  };
-  let secQue = [
-    'What is your birth place?', 'What is your pets name?'
-  ]
+    console.log(errors.phone);
 
+  };
 
   return (
     <div className="w-full px-24 pt-4">
@@ -30,6 +28,7 @@ function AccountSetting() {
                 Profile Information
               </h2>
               <div className="mt-4 grid grid-cols-6">
+
                 <AccountInput
                   id="first-name"
                   name="firstName"
@@ -38,9 +37,10 @@ function AccountSetting() {
                   register={register}
                 />
 
+
                 <AccountInput
                   id="last-name"
-                  name="lName"
+                  name="lastName"
                   label="Last Name"
                   type="text"
                   register={register}
@@ -86,11 +86,11 @@ function AccountSetting() {
                 <label htmlFor="gender" className="block text-xs pb-2">
                   Gender
                 </label>
-                <input type="radio" id="male" name="gender" />
+                <input type="radio" id="male" name="gender" value="male" {...register("gender")} />
                 <label htmlFor="male" className="p-3 font-medium text-sm">
                   Male
                 </label>
-                <input type="radio" id="female" name="gender" />
+                <input type="radio" id="female" name="gender" value="female" {...register("gender")} />
                 <label htmlFor="female" className="p-3 font-medium text-sm">
                   Female
                 </label>
@@ -215,7 +215,7 @@ function AccountSetting() {
              my-6 py-2"
               type="submit"
             >
-              Submit
+              Update
             </button>
           </div>
         </div>
