@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { LoginContext } from "../Context/LoginContext";
+import { LoginContext } from "../../Context/LoginContext";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -40,9 +39,8 @@ function SignIn() {
     <>
       <div className="max-w-md mx-auto my-10 items-center flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 border-2">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
-          <img alt="Your Company" src={logo} className="mx-auto h-10 w-auto" />
           <h2 className=" text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
+            Sign in
           </h2>
         </div>
 
@@ -67,7 +65,7 @@ function SignIn() {
                   type="username"
                   required
                   autoComplete="username"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-xl border-0 py-0.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register("username", { required: true })}
                 />
               </div>
@@ -97,7 +95,7 @@ function SignIn() {
                   type="password"
                   required
                   autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-xl border-0 py-0.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   {...register("password", { required: true })}
                 />
               </div>

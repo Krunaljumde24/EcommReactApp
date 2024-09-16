@@ -1,21 +1,16 @@
-import { useState } from "react";
 import "./App.css";
-import SignIn from "./component/SignIn";
-import SignUp from "./component/SignUp";
 import { Outlet } from "react-router-dom";
-import Header from "./component/Header";
+import Header from "./component/Common/Header";
+import Footer from "./component/Common/Footer";
 import { Toaster } from "react-hot-toast";
-import Navbar from "./component/Navbar";
 
 function App() {
   return (
     <>
-      {/* <Navbar /> */}
       <Header />
-      <Toaster position="top-right" />
-
       <Outlet />
-      {/* <SignUp /> */}
+      <Toaster position="top-right" />
+      <Footer />
     </>
   );
 }

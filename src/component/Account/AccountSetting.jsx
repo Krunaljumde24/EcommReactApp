@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AccountInput from "./AccountInput";
-import { useForm } from "react-hook-form";
-
+import useCustomForm from "../../CustomHooks/useCustomForm"
+import axios from "axios";
 function AccountSetting() {
-  const { handleSubmit, register, watch, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(errors.phone);
+  const { userDetails, handleInputChange, resetForm } = useCustomForm();
 
-  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+    console.log(userDetails);
+
+  }
+
+  useEffect(() => {
+
+    axios.post('', {
+      username: '',
+      email: ''
+    }).then((resp) => {
+
+    }).catch((err) => {
+
+    })
+
+  }, [])
+
 
   return (
     <div className="w-full px-24 pt-4">
@@ -20,7 +35,7 @@ function AccountSetting() {
         tempore omnis non.
       </p>
 
-      <form className="my-t p-6 bg-zinc-50" onSubmit={handleSubmit(onSubmit)}>
+      <form className="my-t p-6 bg-zinc-50">
         <div className="space-y-12">
           <div className="pb-12">
             <div>
@@ -34,7 +49,8 @@ function AccountSetting() {
                   name="firstName"
                   label="First Name"
                   type="text"
-                  register={register}
+                  value={userDetails.firstName}
+                  handleChange={handleInputChange}
                 />
 
 
@@ -43,7 +59,8 @@ function AccountSetting() {
                   name="lastName"
                   label="Last Name"
                   type="text"
-                  register={register}
+                  value={userDetails.lastName}
+                  handleChange={handleInputChange}
                 />
 
                 <AccountInput
@@ -51,7 +68,8 @@ function AccountSetting() {
                   name="username"
                   label="Username"
                   type="text"
-                  register={register}
+                  value={userDetails.username}
+                  handleChange={handleInputChange}
                 />
               </div>
             </div>
@@ -62,7 +80,8 @@ function AccountSetting() {
                 name="email"
                 label="Email Address"
                 type="email"
-                register={register}
+                value={userDetails.email}
+                handleChange={handleInputChange}
               />
 
               <AccountInput
@@ -70,7 +89,8 @@ function AccountSetting() {
                 name="phone"
                 label="Phone Number"
                 type="text"
-                register={register}
+                value={userDetails.phone}
+                handleChange={handleInputChange}
               />
             </div>
             <div className="mt-4 grid grid-cols-6">
@@ -79,18 +99,19 @@ function AccountSetting() {
                 name="dob"
                 label="Date of Birth"
                 type="date"
-                register={register}
+                value={userDetails.dob}
+                handleChange={handleInputChange}
               />
 
               <div className="mt-4 col-span-4 sm:col-span-2">
                 <label htmlFor="gender" className="block text-xs pb-2">
                   Gender
                 </label>
-                <input type="radio" id="male" name="gender" value="male" {...register("gender")} />
+                <input type="radio" id="male" name="gender" value="male" onChange={(event) => handleInputChange(event)} />
                 <label htmlFor="male" className="p-3 font-medium text-sm">
                   Male
                 </label>
-                <input type="radio" id="female" name="gender" value="female" {...register("gender")} />
+                <input type="radio" id="female" name="gender" value="female" onChange={(event) => handleInputChange(event)} />
                 <label htmlFor="female" className="p-3 font-medium text-sm">
                   Female
                 </label>
@@ -106,7 +127,8 @@ function AccountSetting() {
                   name="password"
                   label="New Password"
                   type="password"
-                  register={register}
+                  value={userDetails.password}
+                  handleChange={handleInputChange}
                 />
 
                 <AccountInput
@@ -114,7 +136,8 @@ function AccountSetting() {
                   name="cpassword"
                   label="Confirm Password"
                   type="password"
-                  register={register}
+                  value={userDetails.cpassword}
+                  handleChange={handleInputChange}
                 />
               </div>
             </div>
@@ -128,6 +151,8 @@ function AccountSetting() {
                   id="address"
                   name="address"
                   className="block w-3/5 rounded-lg border-1 py-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 "
+                  value={userDetails.address}
+                  onChange={(event) => handleInputChange(event)}
                 />
               </div>
             </div>
@@ -141,7 +166,10 @@ function AccountSetting() {
                   <select
                     name="country"
                     id="country"
+                    value={userDetails.country}
+                    onChange={(event) => handleInputChange(event)}
                     className="block w-3/4 rounded-full border-1 px-3 py-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 transition duration-300 ease-in-out"
+
                   >
                     <option value="India">India</option>
                     <option value="United States">United States</option>
@@ -149,15 +177,18 @@ function AccountSetting() {
                   </select>
                 </div>
               </div>
-              <AccountInput id="state" name="state" label="State" type="text" register={register} />
-              <AccountInput id="city" name="city" label="City" type="text" register={register} />
+              <AccountInput id="state" name="state" label="State" type="text" value={userDetails.state}
+                handleChange={handleInputChange} />
+              <AccountInput id="city" name="city" label="City" type="text" value={userDetails.city}
+                handleChange={handleInputChange} />
 
               <AccountInput
                 id="zipcode"
                 name="zipcode"
                 label="Zip Code"
                 type="text"
-                register={register}
+                value={userDetails.zipcode}
+                handleChange={handleInputChange}
               />
             </div>
             <h2 className="mt-4 text-sm font-semibold leading-7">
@@ -165,11 +196,14 @@ function AccountSetting() {
             </h2>
             <div className="grid grid-cols-6">
               <div className="col-span-3">
-                <label htmlFor="country" className="block mt-2 text-xs">
+                <label htmlFor="secQue1" className="block mt-2 text-xs">
                   Question 1
                 </label>
                 <select
-                  {...register(`secQue1`)}
+                  id="secQue1"
+                  name="secQue1"
+                  value={userDetails.secQue1}
+                  onChange={(event) => handleInputChange(event)}
                   className="mt-2 w-3/4 rounded-full border border-gray-300 bg-white px-3 py-1 text-gray-900"
                 >
                   <option value="">Choose an option</option>
@@ -182,17 +216,21 @@ function AccountSetting() {
                   name="secQue1Ans"
                   label="Answer 1"
                   type="text"
-                  register={register}
+                  value={userDetails.secQue1Ans}
+                  handleChange={handleInputChange}
                 />
 
               </div>
 
               <div className="col-span-3">
-                <label htmlFor="country" className="block mt-2 text-xs">
+                <label htmlFor="secQue2" className="block mt-2 text-xs">
                   Question 1
                 </label>
                 <select
-                  {...register(`secQue2`)}
+                  id="secQue2"
+                  name="secQue2"
+                  value={userDetails.secQue2}
+                  onChange={(event) => handleInputChange(event)}
                   className="mt-2 w-3/4 rounded-full border border-gray-300 bg-white px-3 py-1 text-gray-900"
                 >
                   <option value="">Choose an option</option>
@@ -205,7 +243,8 @@ function AccountSetting() {
                   name="secQue2Ans"
                   label="Answer 2"
                   type="text"
-                  register={register}
+                  value={userDetails.secQue2Ans}
+                  handleChange={handleInputChange}
                 />
 
               </div>
@@ -214,6 +253,7 @@ function AccountSetting() {
               className="w-80 bg-black text-white rounded-full
              my-6 py-2"
               type="submit"
+              onClick={(event) => onSubmit(event)}
             >
               Update
             </button>

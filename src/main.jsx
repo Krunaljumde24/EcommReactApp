@@ -8,30 +8,44 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import SignIn from "./component/SignIn.jsx";
-import SignUp from "./component/SignUp.jsx";
-import ResetPassword from "./component/ResetPassword.jsx";
+import SignIn from "./component/Auth/SignIn.jsx";
+import SignUp from "./component/Auth/SignUp.jsx";
+import ResetPassword from "./component/Auth/ResetPassword.jsx";
 import { LoginProvider } from "./Context/LoginContext.jsx";
-import Profile from "./component/Profile.jsx";
-import AccountSetting from "./component/AccountSetting.jsx";
+import Profile from "./component/Account/Profile.jsx";
 import Test from "./component/Test.jsx";
+import MainLandingPage from "./component/LandingPage/MainLandingPage.jsx";
+import Cart from './component/Cart.jsx';
+import Shop from './component/Shop.jsx';
+import Products from "./component/Products.jsx";
+import Orders from "./component/Orders.jsx";
+import Checkout from "./component/Checkout.jsx";
+import ContactUs from "./component/ContactUs.jsx";
+import Blog from './component/Blog.jsx';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
+      <Route path="" element={<MainLandingPage />} />
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="profile" element={<Profile />} />
       <Route path="reset" element={<ResetPassword />} />
-      <Route path="settings" element={<AccountSetting />} />
+      <Route path="profile" element={<Profile />} />
+      <Route path="cart" element={<Cart />} />
+      <Route path="shop" element={<Shop />} />
+      <Route path="products" element={<Products />} />
+      <Route path="orders" element={<Orders />} />
+      <Route path="checkout" element={<Checkout />} />
+      <Route path="contactus" element={<ContactUs />} />
+      <Route path="blog" element={<Blog />} />
       <Route path="test" element={<Test />} />
     </Route>
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <>
-    <LoginProvider>
-      <RouterProvider router={router} />
-    </LoginProvider>
-  </>
+  <LoginProvider>
+    <RouterProvider router={router} />
+  </LoginProvider>
 );
