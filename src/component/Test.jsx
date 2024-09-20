@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import "./test.css"
 
 function Test() {
 
@@ -49,7 +50,7 @@ function Test() {
 
   return (
 
-    <div>
+    <div className="min-h-80 bg-slate-400">
       <form onSubmit={handleSubmit(submit)}>
         <label>FIRST NAME:</label>
         <input
@@ -76,7 +77,7 @@ function Test() {
         />
         {errorMessageHandle(errors.age, watch('age'))}
 
-        <button>Submit</button>
+        <button className="submitBtn">Submit</button>
       </form>
       <h2>{watch('fname')}</h2>
     </div>

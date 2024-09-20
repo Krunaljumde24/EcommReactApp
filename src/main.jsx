@@ -22,6 +22,7 @@ import Orders from "./component/Orders.jsx";
 import Checkout from "./component/Checkout.jsx";
 import ContactUs from "./component/ContactUs.jsx";
 import Blog from './component/Blog.jsx';
+import AccountSetting from "./component/Account/AccountSetting.jsx"
 
 
 const router = createBrowserRouter(
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
       <Route path="signup" element={<SignUp />} />
       <Route path="profile" element={<Profile />} />
       <Route path="reset" element={<ResetPassword />} />
+      <Route path="settings" element={<AccountSetting />} />
       <Route path="profile" element={<Profile />} />
       <Route path="cart" element={<Cart />} />
       <Route path="shop" element={<Shop />} />

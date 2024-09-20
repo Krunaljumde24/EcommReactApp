@@ -1,0 +1,16 @@
+.submitBtn {
+  border: 1px solid black;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 20px;
+  background-color: lightsalmon;
+}
+
+.submitBtn:hover {
+  background-color: rgb(239, 127, 82);
+  transition: ease-in-out 200ms;
+}
+
+.submitBtn:focus {
+    background-color: brown;
+}

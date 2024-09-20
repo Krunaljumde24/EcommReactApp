@@ -156,6 +156,7 @@ function Header() {
                           role="menuitem"
                           tabIndex="-1"
                           id="user-menu-item-0"
+                          onClick={() => setClick(!click)}
                         >
                           {links.item}
                         </Link>
@@ -170,6 +171,7 @@ function Header() {
                           role="menuitem"
                           tabIndex="-1"
                           id="user-menu-item-1"
+                          onClick={() => setClick(!click)}
                         >
                           {links.item}
                         </Link>

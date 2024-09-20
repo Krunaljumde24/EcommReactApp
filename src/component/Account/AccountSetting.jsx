@@ -35,7 +35,7 @@ function AccountSetting() {
         tempore omnis non.
       </p>
 
-      <form className="my-t p-6 bg-zinc-50">
+      <form className="my-3 p-6 bg-slate-200 shadow-xl">
         <div className="space-y-12">
           <div className="pb-12">
             <div>

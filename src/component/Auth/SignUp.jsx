@@ -21,14 +21,17 @@ function SignUp() {
     console.log(data);
 
     axios
-      .post("http://localhost:8080/signup", {
-        name: data.name,
+      .post("http://localhost:8080/auth/api/signup", {
+        firstName: data.firstName,
+        lastName: data.lastName,
         email: data.email,
         username: data.username,
         password: data.password,
       })
       .then((res) => {
         console.log(res);
+        console.log(res);
+
         if (res.status === 201) {
           toast.success("User sign up successfully");
           navigate("/signIn");
@@ -37,11 +40,13 @@ function SignUp() {
         }
       })
       .catch((err) => {
-        if (err.response && err.response.status === 400) {
-          toast.error("Email aready exists.Please use a different email");
-        } else {
-          console.log(err);
-        }
+        console.log(err);
+
+        // if (err.response && err.response.status === 400) {
+        //   toast.error("Email aready exists.Please use a different email");
+        // } else {
+        //   console.log(err);
+        // }
       });
   };
 
