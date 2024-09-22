@@ -11,7 +11,7 @@ function Header() {
 
   const loggedInNavLinks = [{ item: 'Your Profile', to: '/profile' }, { item: 'Settings', to: '/settings' }, { item: 'Sign Out', to: '/signout' }];
 
-  const loggedOutNavLinks = [{ item: 'Sign In', to: '/signin' }, { item: 'Sign Up', to: '/signup' }]
+  const loggedOutNavLinks = [{ item: 'Sign In', to: '/login' }, { item: 'Sign Up', to: '/signup' }]
 
   const navLinks = [
     {
@@ -39,9 +39,6 @@ function Header() {
     } else {
       setIsLoggedIn(false)
     }
-
-    console.log(isMenuOpen);
-
   }, [isMenuOpen])
 
 
@@ -106,9 +103,10 @@ function Header() {
               <div className="flex space-x-4">
                 {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
 
-                {navLinks.map((lnk) => {
+                {navLinks.map((lnk, index) => {
                   return (
                     <Link
+                      key={index}
                       to={lnk.to}
                       className="rounded-md px-3 py-2 text-sm font-medium text-black-400 hover:bg-gray-700 hover:text-white"
                     >
@@ -163,9 +161,10 @@ function Header() {
                       )
                     })}
                   </> : <>
-                    {loggedOutNavLinks.map((links) => {
+                    {loggedOutNavLinks.map((links, index) => {
                       return (
                         <Link
+                          key={index}
                           to={links.to}
                           className="block px-4 py-2 text-sm text-gray-700"
                           role="menuitem"

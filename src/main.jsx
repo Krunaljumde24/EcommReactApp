@@ -8,7 +8,7 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-import SignIn from "./component/Auth/SignIn.jsx";
+import Login from "./component/Auth/Login.jsx";
 import SignUp from "./component/Auth/SignUp.jsx";
 import ResetPassword from "./component/Auth/ResetPassword.jsx";
 import { LoginProvider } from "./Context/LoginContext.jsx";
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="" element={<MainLandingPage />} />
-      <Route path="signin" element={<SignIn />} />
+      <Route path="login" element={<Login />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="profile" element={<Profile />} />
       <Route path="reset" element={<ResetPassword />} />

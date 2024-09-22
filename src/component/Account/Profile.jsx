@@ -26,12 +26,12 @@ function Profile() {
           if (error.response.data.status === "Unauthorized") {
             toast.error("Login session has expired, please re login.");
             sessionStorage.removeItem("token");
-            navigate("/signin");
+            navigate("/login");
           }
         });
     } else {
       toast.error("Please login.");
-      navigate("/signin");
+      navigate("/login");
     }
   }, []);
 

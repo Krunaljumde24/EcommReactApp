@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { LoginContext } from "../../Context/LoginContext";
 
-function SignIn() {
+function Login() {
   const navigate = useNavigate();
   const { logIn } = useContext(LoginContext);
   const { register, handleSubmit } = useForm();
@@ -126,4 +126,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default Login;
