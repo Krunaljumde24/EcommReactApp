@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import profileIcon from "../../assets/profile-icon1.png";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
+import { ShoppingCartIcon } from "@heroicons/react/20/solid";
+import { ShoppingBagIcon } from "@heroicons/react/24/outline";
 
 function Header() {
   const [click, setClick] = useState(false);
@@ -99,7 +101,7 @@ function Header() {
               <img className="h-8 w-auto" src={logo} />
               <h3 className="text-lg m-2">E-Comm React</h3>
             </div>
-            <div className="hidden sm:ml-6 sm:block m-">
+            <div className="hidden sm:ml-6 sm:block mx-auto">
               <div className="flex space-x-4">
                 {/* <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" --> */}
 
@@ -119,7 +121,11 @@ function Header() {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <div className="relative ml-3">
-              <div>
+              <div className="flex">
+                <button type="button" className="mr-2 relative inline-flex justify-center items-center  text-sm font-semibold rounded-lg border text-gray-800 shadow-sm  ">
+                  <ShoppingCartIcon width='2rem' height='2rem' />
+                  <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500 text-white">99+</span>
+                </button>
                 <button
                   type="button"
                   className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

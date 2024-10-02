@@ -1,31 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductCard from './products/ProductCard'
 import Sidebar from './Sidebar'
 import { MagnifyingGlassCircleIcon } from '@heroicons/react/24/solid'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 function Shop() {
 
-  const [data, setData] = useState([{
-    name: 'apple',
-  }, {
-    name: 'banana',
-  }, {
-    name: 'straberry',
-  }, {
-    name: 'berry',
-  }, {
-    name: 'orange',
-  }, {
-    name: 'orange',
-  }, {
-    name: 'orange',
-  }, {
-    name: 'orange',
-  }, {
-    name: 'orange',
-  }])
+  const [productDetails, setProductDetails] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/product/api/getAllProducts').then((resp) => {
+      setProductDetails(resp.data)
+    }).catch(error => {
+      console.log(error);
+      toast.error('Backend servers are not accessible.')
+    })
+  }, [])
+
   return (
-    <div className='flex mx-5'>
+    <div className='flex mx-5 mb-5'>
       <div className='w-52 m-5'>
         <Sidebar />
       </div>
@@ -41,14 +36,21 @@ function Shop() {
         </div>
 
         <div className='mt-5'>
-          <p className='text-sm font-bold mb-2'>Showing 1-12 of 24 item(s)</p>
+          <p className='text-sm font-bold mb-2'>Showing {productDetails.length} item(s)</p>
           <p className='text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil asperiores temporibus, eveniet cumque excepturi culpa! Sapiente a ad quibusdam. Dolor ipsum ullam voluptates in laborum inventore necessitatibus vel debitis pariatur!</p>
         </div>
 
         <div className='grid md:grid-cols-4  grid-cols-2 gap-4 min-h-96 mx-1 my-5'>
-          {data.map((dt) => {
+          {productDetails.map((data, index) => {
             return (
-              <ProductCard />
+              <Link to='/productDetails' state={{ productData: data }} key={index}>
+                <ProductCard
+                  discount={data.discount}
+                  price={data.price}
+                  title={data.title}
+                  image={data.images[0]}
+                />
+              </Link>
             )
           })}
         </div>

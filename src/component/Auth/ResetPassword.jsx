@@ -12,7 +12,7 @@ function ResetPassword() {
     const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState({ password: '', cpassword: '' });
 
-    const [secQue, setSecQue] = useState({ secQue1: '', secQue1: '' });
+    const [secQue, setSecQue] = useState({ secQue1: '', secQue2: '' });
 
     const [secQueAns, setSecQueAns] = useState({ secQueAns1: '', secQueAns2: '' })
 

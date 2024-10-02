@@ -8,7 +8,9 @@ function App() {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="min-h-screen bg-white">
+        <Outlet />
+      </div>
       <Toaster position="top-right" />
       <Footer />
     </>
