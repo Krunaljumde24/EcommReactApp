@@ -9,11 +9,13 @@ function Profile() {
 
   let navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     let token_value = sessionStorage.getItem("token");
     if (token_value) {
       axios
-        .get("http://localhost:8080/auth/api/verifyToken", {
+        .get(`${API_BASE_URL}/auth/api/verifyToken`, {
           headers: {
             token: token_value,
           },

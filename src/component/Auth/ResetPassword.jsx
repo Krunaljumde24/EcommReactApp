@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 function ResetPassword() {
 
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
     const [flag1, setFlag1] = useState(true)
     const [flag2, setFlag2] = useState(false)
     const [flag3, setFlag3] = useState(false)
@@ -28,7 +30,7 @@ function ResetPassword() {
 
     const submitBtnClick = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8080/auth/api/checkEmailToResetPassword', {
+        axios.post(`${API_BASE_URL}/auth/api/checkEmailToResetPassword`, {
             email: email
         }).then((resp) => {
             setSecQue(resp.data);
@@ -41,7 +43,7 @@ function ResetPassword() {
 
     const verify = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8080/auth/api/checkSecurityAnswers', {
+        axios.post(`${API_BASE_URL}/auth/api/checkSecurityAnswers`, {
             "email": email,
             "secQue1": secQue.secQue1,
             "secQue2": secQue.secQue2,
@@ -62,7 +64,7 @@ function ResetPassword() {
     const updatePassword = (event) => {
         event.preventDefault();
         if (pwd.password && pwd.cpassword && pwd.password === pwd.cpassword) {
-            axios.post('http://localhost:8080/auth/api/resetPassword', {
+            axios.post(`${API_BASE_URL}/auth/api/resetPassword`, {
                 email: email,
                 password: pwd.password
             }).then(resp => {

@@ -5,10 +5,13 @@ import axios from 'axios'
 
 function FeaturedProducts() {
 
+
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
     const [featuredProducts, setFeaturedProducts] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8080/product/api/getFeaturedProducts')
+        axios.get(`${API_BASE_URL}/product/api/getFeaturedProducts`)
             .then(resp => {
                 setFeaturedProducts(resp.data)
             })

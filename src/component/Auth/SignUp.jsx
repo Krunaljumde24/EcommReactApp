@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 function SignUp() {
+
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const {
     register,
     resetField,
@@ -21,7 +24,7 @@ function SignUp() {
     console.log(data);
 
     axios
-      .post("http://localhost:8080/auth/api/signup", {
+      .post(`${API_BASE_URL}/auth/api/signup`, {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,

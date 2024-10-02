@@ -10,10 +10,12 @@ function Login() {
   const { logIn } = useContext(LoginContext);
   const { register, handleSubmit } = useForm();
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const onSubmit = (data) => {
     if (data.username && data.password) {
       axios
-        .post("http://localhost:8080/auth/api/login", {
+        .post(`${API_BASE_URL}/auth/api/login`, {
           username: data.username,
           password: data.password,
         })

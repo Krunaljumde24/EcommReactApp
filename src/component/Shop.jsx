@@ -10,8 +10,10 @@ function Shop() {
 
   const [productDetails, setProductDetails] = useState([]);
 
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
-    axios.get('http://localhost:8080/product/api/getAllProducts').then((resp) => {
+    axios.get(`${API_BASE_URL}/product/api/getAllProducts`).then((resp) => {
       setProductDetails(resp.data)
     }).catch(error => {
       console.log(error);
