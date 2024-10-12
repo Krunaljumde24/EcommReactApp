@@ -39,7 +39,8 @@ const useCustomForm = () => {
     return {
         userDetails,
         handleInputChange,
-        resetForm
+        resetForm,
+        setUserDetails
     }
 }
 

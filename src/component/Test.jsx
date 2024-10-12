@@ -5,6 +5,10 @@ import { BounceLoader } from "react-spinners";
 
 function Test() {
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  }
+
   return (
     <div className="mx-20 border">
       <dir className="flex flex-row gap-4">
@@ -20,6 +24,11 @@ function Test() {
           A
         </div>
       </dir>
+
+      <button onClick={(event) => handleSubmit(event)}>Submit</button>
+      <button onClick={handleSubmit()}>Submit</button>
+
+
     </div>
   );
 }

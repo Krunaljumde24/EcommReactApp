@@ -26,7 +26,7 @@ const CartContextProvider = ({ children }) => {
     }
 
     const getCartData = () => {
-        return cartDataMap
+        return cartDataMap;
     }
 
     useEffect(() => {

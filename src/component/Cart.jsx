@@ -1,6 +1,35 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { CartContext } from '../Context/CartContext'
 
 function Cart() {
+
+    const [cartDetails, setCartDetails] = useState(new Map());
+
+    const { addItemToCart, getCartData } = useContext(CartContext);
+
+    const [pricingDetails, setPricingDetails] = useState({
+        subTotal: 0,
+        discount: 0,
+        total: 0
+    })
+
+    useEffect(() => {
+        setCartDetails(getCartData())
+
+        let subTotalPrice = 0;
+        let totalDiscount = 0;
+        let totalPrice = 0;
+
+    Array.from(cartDetails, ([id, data]) => {
+            subTotalPrice += data.price;
+            totalDiscount += data.discount;
+        })
+
+        
+        // setPricingDetails
+
+    }, [getCartData])
+
     return (
         <div className='mx-20'>
             <div className="flex gap-4 m-4">
@@ -16,25 +45,26 @@ function Cart() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                        Mac Book Air
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                        1110000
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                                        2
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-end text-sm">
-                                        2220000
-                                    </td>
-                                </tr>
+                                {Array.from(cartDetails, ([id, data]) => (
+                                    <tr key={id}>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                            {data.title}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                            {data.price}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                                            {data.quantity}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-end text-sm">
+                                            {data.price * data.quantity}
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
                 </div>
-
                 <div className='basis-2/5'>
                     <div className="border rounded-lg shadow  overflow-hidden">
                         <table className="min-w-full divide-y divide-gray-200">
@@ -73,7 +103,6 @@ function Cart() {
                         </table>
                     </div>
                 </div>
-
             </div >
         </div >
     )

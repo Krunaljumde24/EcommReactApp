@@ -37,7 +37,7 @@ function SignUp() {
 
         if (res.status === 201) {
           toast.success("User sign up successfully");
-          navigate("/signIn");
+          navigate("/login");
           setSignedUp(true);
           console.log("signup successfully");
         }

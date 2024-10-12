@@ -26,6 +26,7 @@ import Blog from './component/Blog.jsx';
 import AccountSetting from "./component/Account/AccountSetting.jsx"
 import ProductDetails from "./component/products/ProductDetails.jsx";
 import Test3 from "./component/Test3.jsx";
+import Test4 from './component/Test4.jsx';
 import { CartContextProvider } from "./Context/CartContext.jsx";
 
 
@@ -50,6 +51,7 @@ const router = createBrowserRouter(
       <Route path="test" element={<Test />} />
       <Route path="test2" element={<Test2 />} />
       <Route path="test3" element={<Test3 />} />
+      <Route path="test4" element={<Test4 />} />
     </Route>
   )
 );

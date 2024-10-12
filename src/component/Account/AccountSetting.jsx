@@ -4,25 +4,43 @@ import useCustomForm from "../../CustomHooks/useCustomForm"
 import axios from "axios";
 function AccountSetting() {
 
-  const { userDetails, handleInputChange, resetForm } = useCustomForm();
+  const { userDetails, handleInputChange, resetForm, setUserDetails } = useCustomForm();
 
-  const onSubmit = (event) => {
+
+  const updateAccountDetails = (event) => {
+    // Integrate API to update only account basic details
     event.preventDefault();
     console.log(userDetails);
 
   }
 
   useEffect(() => {
-
-    axios.post('', {
-      username: '',
-      email: ''
+    axios.post('http://localhost:8080/user/api/get-user-details', {
+      "username": "kjumde1",
+      "email": "krunaljumde@gmail.com"
     }).then((resp) => {
+      console.log(resp.data);
+      let data = resp.data;
+      setUserDetails(
+        {
+          ...userDetails,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          username: data.username,
+          email: data.email,
+          phone: data.phoneNumber,
+          dob: data.dateOfBirth,
+          gender: data.gender,
+          address: data.address,
+          country: data.country,
+          state: data.state,
+          ci
+        }
+      )
 
     }).catch((err) => {
-
+      console.log(err);
     })
-
   }, [])
 
 
@@ -67,6 +85,7 @@ function AccountSetting() {
                   id="username"
                   name="username"
                   label="Username"
+                  disabled={true}
                   type="text"
                   value={userDetails.username}
                   handleChange={handleInputChange}
@@ -80,6 +99,7 @@ function AccountSetting() {
                 name="email"
                 label="Email Address"
                 type="email"
+                disabled={true}
                 value={userDetails.email}
                 handleChange={handleInputChange}
               />
@@ -117,30 +137,7 @@ function AccountSetting() {
                 </label>
               </div>
             </div>
-            <div>
-              <h2 className="text-sm font-semibold leading-7 mt-5">
-                Change Password
-              </h2>
-              <div className="mt-4 grid grid-cols-6">
-                <AccountInput
-                  id="password"
-                  name="password"
-                  label="New Password"
-                  type="password"
-                  value={userDetails.password}
-                  handleChange={handleInputChange}
-                />
 
-                <AccountInput
-                  id="cpassword"
-                  name="cpassword"
-                  label="Confirm Password"
-                  type="password"
-                  value={userDetails.cpassword}
-                  handleChange={handleInputChange}
-                />
-              </div>
-            </div>
 
             <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
               <div className="col-span-6">
@@ -191,72 +188,109 @@ function AccountSetting() {
                 handleChange={handleInputChange}
               />
             </div>
-            <h2 className="mt-4 text-sm font-semibold leading-7">
-              Security Questions
-            </h2>
-            <div className="grid grid-cols-6">
-              <div className="col-span-3">
-                <label htmlFor="secQue1" className="block mt-2 text-xs">
-                  Question 1
-                </label>
-                <select
-                  id="secQue1"
-                  name="secQue1"
-                  value={userDetails.secQue1}
-                  onChange={(event) => handleInputChange(event)}
-                  className="mt-2 w-3/4 rounded-full border border-gray-300 bg-white px-3 py-1 text-gray-900"
-                >
-                  <option value="">Choose an option</option>
-                  <option value="What is your birth place?">What is your birth place?</option>
-                  <option value="What is your pet's name?">What is your pet's name?</option>
-                  <option value="What is your favorite place?">What is your favorite place?</option>
-                </select >
-                <AccountInput
-                  id="secQue1Ans"
-                  name="secQue1Ans"
-                  label="Answer 1"
-                  type="text"
-                  value={userDetails.secQue1Ans}
-                  handleChange={handleInputChange}
-                />
-
-              </div>
-
-              <div className="col-span-3">
-                <label htmlFor="secQue2" className="block mt-2 text-xs">
-                  Question 1
-                </label>
-                <select
-                  id="secQue2"
-                  name="secQue2"
-                  value={userDetails.secQue2}
-                  onChange={(event) => handleInputChange(event)}
-                  className="mt-2 w-3/4 rounded-full border border-gray-300 bg-white px-3 py-1 text-gray-900"
-                >
-                  <option value="">Choose an option</option>
-                  <option value="What is your birth place?">What is your birth place?</option>
-                  <option value="What is your pet's name?">What is your pet's name?</option>
-                  <option value="What is your favorite place?">What is your favorite place?</option>
-                </select >
-                <AccountInput
-                  id="secQue2Ans"
-                  name="secQue2Ans"
-                  label="Answer 2"
-                  type="text"
-                  value={userDetails.secQue2Ans}
-                  handleChange={handleInputChange}
-                />
-
-              </div>
-            </div>
             <button
-              className="w-80 bg-black text-white rounded-full
-             my-6 py-2"
+              className="text-sm bg-black text-white rounded-full
+             my-6 py-2 px-4"
               type="submit"
-              onClick={(event) => onSubmit(event)}
+              onClick={(event) => updateAccountDetails(event)}
             >
-              Update
+              Update Account Details
             </button>
+
+            <div className="border border-slate-900 p-2 rounded-md">
+              <p className="font-bold text-red-500">*This functionality is currently unavaialble</p>
+              <h2 className="text-sm font-semibold leading-7 mt-5">
+                Change Password
+              </h2>
+              <div className="mt-4 grid grid-cols-6">
+                <AccountInput
+                  id="password"
+                  name="password"
+                  label="New Password"
+                  type="password"
+                  value={userDetails.password}
+                  handleChange={handleInputChange}
+                />
+
+                <AccountInput
+                  id="cpassword"
+                  name="cpassword"
+                  label="Confirm Password"
+                  type="password"
+                  value={userDetails.cpassword}
+                  handleChange={handleInputChange}
+                />
+              </div>
+
+              <h2 className="mt-4 text-sm font-semibold leading-7">
+                Security Questions
+              </h2>
+              <div className="grid grid-cols-6">
+                <div className="col-span-3">
+                  <label htmlFor="secQue1" className="block mt-2 text-xs">
+                    Question 1
+                  </label>
+                  <select
+                    id="secQue1"
+                    name="secQue1"
+                    value={userDetails.secQue1}
+                    onChange={(event) => handleInputChange(event)}
+                    className="mt-2 w-3/4 rounded-full border border-gray-300 bg-white px-3 py-1 text-gray-900"
+                  >
+                    <option value="">Choose an option</option>
+                    <option value="What is your birth place?">What is your birth place?</option>
+                    <option value="What is your pet's name?">What is your pet's name?</option>
+                    <option value="What is your favorite place?">What is your favorite place?</option>
+                  </select >
+                  <AccountInput
+                    id="secQue1Ans"
+                    name="secQue1Ans"
+                    label="Answer 1"
+                    type="text"
+                    value={userDetails.secQue1Ans}
+                    handleChange={handleInputChange}
+                  />
+
+                </div>
+
+                <div className="col-span-3">
+                  <label htmlFor="secQue2" className="block mt-2 text-xs">
+                    Question 1
+                  </label>
+                  <select
+                    id="secQue2"
+                    name="secQue2"
+                    value={userDetails.secQue2}
+                    onChange={(event) => handleInputChange(event)}
+                    className="mt-2 w-3/4 rounded-full border border-gray-300 bg-white px-3 py-1 text-gray-900"
+                  >
+                    <option value="">Choose an option</option>
+                    <option value="What is your birth place?">What is your birth place?</option>
+                    <option value="What is your pet's name?">What is your pet's name?</option>
+                    <option value="What is your favorite place?">What is your favorite place?</option>
+                  </select >
+                  <AccountInput
+                    id="secQue2Ans"
+                    name="secQue2Ans"
+                    label="Answer 2"
+                    type="text"
+                    value={userDetails.secQue2Ans}
+                    handleChange={handleInputChange}
+                  />
+
+                </div>
+              </div>
+
+              <button
+                className="w-80 bg-black text-white rounded-full
+             my-6 py-2"
+                type="submit"
+                onClick={(event) => { }}
+              >
+                Update Security Details
+              </button>
+            </div>
+
           </div>
         </div>
       </form >
