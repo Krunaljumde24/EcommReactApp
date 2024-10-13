@@ -31,9 +31,9 @@ function FeaturedProducts() {
                 </p>
             </div>
             <div className='grid md:grid-cols-4  grid-cols-2 gap-4 min-h-96 mx-1 my-5'>
-                {featuredProducts.map((data) => {
+                {featuredProducts.map((data, index) => {
                     return (
-                        <Link to='/productDetails' state={{ productData: data }} >
+                        <Link to='/productDetails' state={{ productData: data }} key={index} >
                             <ProductCard
                                 discount={data.discount}
                                 price={data.price}

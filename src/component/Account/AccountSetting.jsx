@@ -2,10 +2,17 @@ import React, { useEffect } from "react";
 import AccountInput from "./AccountInput";
 import useCustomForm from "../../CustomHooks/useCustomForm"
 import axios from "axios";
+import useAuthentication from '../../CustomHooks/useAuthentication';
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 function AccountSetting() {
 
   const { userDetails, handleInputChange, resetForm, setUserDetails } = useCustomForm();
 
+  const navigate = useNavigate();
+
+  const { checkLoginStatus } = useAuthentication();
 
   const updateAccountDetails = (event) => {
     // Integrate API to update only account basic details
@@ -15,32 +22,40 @@ function AccountSetting() {
   }
 
   useEffect(() => {
-    axios.post('http://localhost:8080/user/api/get-user-details', {
-      "username": "kjumde1",
-      "email": "krunaljumde@gmail.com"
-    }).then((resp) => {
-      console.log(resp.data);
-      let data = resp.data;
-      setUserDetails(
-        {
-          ...userDetails,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          username: data.username,
-          email: data.email,
-          phone: data.phoneNumber,
-          dob: data.dateOfBirth,
-          gender: data.gender,
-          address: data.address,
-          country: data.country,
-          state: data.state,
-          ci
-        }
-      )
 
-    }).catch((err) => {
-      console.log(err);
-    })
+    if (checkLoginStatus()) {
+      axios.post('http://localhost:8080/user/api/get-user-details', {
+        "username": "kjumde1",
+        "email": "krunaljumde@gmail.com"
+      }).then((resp) => {
+        console.log(resp.data);
+        let data = resp.data;
+        setUserDetails(
+          {
+            ...userDetails,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            username: data.username,
+            email: data.email,
+            phone: data.phoneNumber,
+            dob: data.dateOfBirth,
+            gender: data.gender,
+            address: data.address,
+            country: data.country,
+            state: data.state,
+            ci
+          }
+        )
+
+      }).catch((err) => {
+        console.log(err);
+      })
+    } else {
+      toast.error('Please login.')
+      navigate('/login')
+    }
+
+
   }, [])
 
 

@@ -2,12 +2,41 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./test.css"
 import { BounceLoader } from "react-spinners";
+import toast from "react-hot-toast";
+import useTest from "../CustomHooks/useTest";
+import useAuthentication from "../CustomHooks/useAuthentication";
 
 function Test() {
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+
+  const { testData, addDataToTest } = useTest();
+  // const { data, setData } = useAuthentication();
+
+  const handleSubmit = () => {
+    toast('Hello World', {
+      duration: 3000,
+      position: 'top-center',
+      icon: '⚠️',
+      iconTheme: {
+        primary: '#000',
+        secondary: '#fff',
+      },
+    });
+    addDataToTest({
+      name: 'krunal',
+      age: 24,
+      email: 'krunaljumde24@gmail.com'
+    })
+    setData({ test: 'test' })
+
+
   }
+
+  useEffect(() => {
+    // console.log(testData);
+    // console.log(data);
+
+  }, [])
 
   return (
     <div className="mx-20 border">
@@ -25,8 +54,12 @@ function Test() {
         </div>
       </dir>
 
-      <button onClick={(event) => handleSubmit(event)}>Submit</button>
-      <button onClick={handleSubmit()}>Submit</button>
+      <button
+        onClick={() => handleSubmit()}
+        className="bg-pink-400 p-2 rounded-lg">
+        Submit
+      </button>
+      {/* <button onClick={handleSubmit()}>Submit</button> */}
 
 
     </div>

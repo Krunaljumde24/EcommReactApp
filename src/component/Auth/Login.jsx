@@ -1,48 +1,51 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { LoginContext } from "../../Context/LoginContext";
+import UseAuth from '../../CustomHooks/useAuthentication';
 
 function Login() {
-  const navigate = useNavigate();
-  const { logIn } = useContext(LoginContext);
+
+
   const { register, handleSubmit } = useForm();
+
+  const { login, checkLoginStatus } = UseAuth();
+  const navigate = useNavigate();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const onSubmit = (data) => {
-    if (data.username && data.password) {
-      axios
-        .post(`${API_BASE_URL}/auth/api/login`, {
-          username: data.username,
-          password: data.password,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            let result = logIn(data.username);
-            sessionStorage.setItem("token", res.data.token);
-            toast.success("Logged in succesfully");
-            navigate("/profile");
-          }
-        })
-        .catch((err) => {
-          if (err.response.data.status === 400) toast.error(err.response.data);
-          else if (err.response.data.status === 401)
-            toast.error(err.response.data);
-          else toast.error("Failed to login!");
-        });
+  const onLoginSubmit = (data) => {
+    let { username, password } = data;
+    if (username && password) {
+      login(username, password)
     } else {
       toast.error("Please enter valid username and password");
     }
   };
+
+  const loginWithGuestUser = (event) => {
+    event.preventDefault();
+    login('guestuser', 'Guest')
+  }
+
+  useEffect(() => {
+    if (checkLoginStatus()) {
+      toast('You are already logged in. !!', {
+        duration: 3000,
+        position: "top-center",
+        icon: 'ℹ️'
+      })
+      navigate('/')
+    }
+  }, [])
+
+
   return (
     <>
       <div className="max-w-md mx-auto my-10 items-center flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 border-2">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
           <h2 className=" text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in
+            Login
           </h2>
         </div>
 
@@ -51,7 +54,7 @@ function Login() {
             action="#"
             method="POST"
             className="space-y-6"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onLoginSubmit)}
           >
             <div>
               <label
@@ -108,7 +111,7 @@ function Login() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
+                Login
               </button>
             </div>
           </form>
@@ -122,6 +125,14 @@ function Login() {
               Register here
             </Link>
           </p>
+
+          <button
+            type="submit"
+            className="flex w-full justify-center rounded-md bg-yellow-400 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={(event) => loginWithGuestUser(event)}
+          >
+            Login with Guest User
+          </button>
         </div>
       </div>
     </>

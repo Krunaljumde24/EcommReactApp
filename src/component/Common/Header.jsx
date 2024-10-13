@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import profileIcon from "../../assets/profile-icon1.png";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
+import useAuthentication from "../../CustomHooks/useAuthentication";
 
 function Header() {
   const [click, setClick] = useState(false);
+
+  const { logout, checkLoginStatus } = useAuthentication();
+
+  const navigate = useNavigate()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const loggedInNavLinks = [{ item: 'Your Profile', to: '/profile' }, { item: 'Settings', to: '/settings' }, { item: 'Sign Out', to: '/signout' }];
 
-  const loggedOutNavLinks = [{ item: 'Sign In', to: '/login' }, { item: 'Sign Up', to: '/signup' }]
+  const loggedOutNavLinks = [{ item: 'Login', to: '/login' }, { item: 'Sign Up', to: '/signup' }]
 
   const navLinks = [
     {
@@ -34,8 +39,7 @@ function Header() {
   ]
 
   useEffect(() => {
-    let loginToken = sessionStorage.getItem('token');
-    if (loginToken && loginToken != '') {
+    if (checkLoginStatus()) {
       setIsLoggedIn(true)
     } else {
       setIsLoggedIn(false)
@@ -115,6 +119,18 @@ function Header() {
                     </Link>
                   )
                 })}
+                <button className="rounded-md px-3 py-2 text-sm font-medium text-red-400 bg-white hover:bg-gray-700 hover:text-white"
+                  onClick={() => {
+                    if (isLoggedIn) {
+                      logout();
+                      setIsLoggedIn(false)
+                    } else {
+                      navigate('/login')
+                    }
+                  }}
+                >
+                  {isLoggedIn ? 'Logout' : 'Login'}
+                </button>
               </div>
             </div>
           </div>
@@ -153,9 +169,10 @@ function Header() {
                   tabIndex="-1"
                 >
                   {isLoggedIn ? <>
-                    {loggedInNavLinks.map((links) => {
+                    {loggedInNavLinks.map((links, index) => {
                       return (
                         <Link
+                          key={index}
                           to={links.to}
                           className="block px-4 py-2 text-sm text-gray-700"
                           role="menuitem"
