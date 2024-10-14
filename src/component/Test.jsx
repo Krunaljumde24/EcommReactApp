@@ -4,13 +4,10 @@ import "./test.css"
 import { BounceLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import useTest from "../CustomHooks/useTest";
-import useAuthentication from "../CustomHooks/useAuthentication";
 
 function Test() {
 
-
   const { testData, addDataToTest } = useTest();
-  // const { data, setData } = useAuthentication();
 
   const handleSubmit = () => {
     toast('Hello World', {

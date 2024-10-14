@@ -1,11 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import { LoginContext } from "../../Context/LoginContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 function Profile() {
-  const { logedInUser } = useContext(LoginContext);
 
   let navigate = useNavigate();
 
@@ -40,7 +38,7 @@ function Profile() {
   return (
     <div>
       {/* <h1>Welcome {logedInUser}</h1> */}
-      <h4 className="text-2xl font-bold">{logedInUser}</h4>
+      <h4 className="text-2xl font-bold"></h4>
     </div>
   );
 }

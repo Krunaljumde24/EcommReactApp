@@ -5,7 +5,6 @@ import { MagnifyingGlassCircleIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom'
 import axios, { HttpStatusCode } from 'axios'
 import toast from 'react-hot-toast';
-import UseAuth from '../CustomHooks/useAuthentication'
 
 function Shop() {
 
@@ -13,23 +12,19 @@ function Shop() {
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const { checkLoginStatus, loggedInUserDetails } = UseAuth();
-
   useEffect(() => {
 
-    if (checkLoginStatus()) {
 
-    } else {
-      axios.get(`${API_BASE_URL}/product/api/getAllProducts`)
-        .then((resp) => {
-          setProductDetails(resp.data)
-        })
-        .catch(error => {
-          console.log(error);
-          toast.error('Backend servers are not accessible.')
-        })
-    }
-  }, [loggedInUserDetails])
+    axios.get(`${API_BASE_URL}/product/api/getAllProducts`)
+      .then((resp) => {
+        setProductDetails(resp.data)
+      })
+      .catch(error => {
+        console.log(error);
+        toast.error('Backend servers are not accessible.')
+      })
+  }
+    , [])
 
   return (
     <div className='flex mx-5 mb-5'>

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import AccountInput from "./AccountInput";
 import useCustomForm from "../../CustomHooks/useCustomForm"
 import axios from "axios";
-import useAuthentication from '../../CustomHooks/useAuthentication';
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -12,7 +11,6 @@ function AccountSetting() {
 
   const navigate = useNavigate();
 
-  const { checkLoginStatus } = useAuthentication();
 
   const updateAccountDetails = (event) => {
     // Integrate API to update only account basic details

@@ -1,25 +1,23 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
-import UseAuth from '../../CustomHooks/useAuthentication';
+import useAuthentication from "../../CustomHooks/useAuthentication";
 
 function Login() {
 
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
 
-  const { login, checkLoginStatus } = UseAuth();
-  const navigate = useNavigate();
+  const { login } = useAuthentication();
+
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const onLoginSubmit = (data) => {
     let { username, password } = data;
-    if (username && password) {
+    if (username && password && username != '' && password != '') {
       login(username, password)
-    } else {
-      toast.error("Please enter valid username and password");
     }
   };
 
@@ -29,14 +27,7 @@ function Login() {
   }
 
   useEffect(() => {
-    if (checkLoginStatus()) {
-      toast('You are already logged in. !!', {
-        duration: 3000,
-        position: "top-center",
-        icon: 'ℹ️'
-      })
-      navigate('/')
-    }
+
   }, [])
 
 
