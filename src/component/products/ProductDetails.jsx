@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { PlusIcon, MinusIcon } from '@heroicons/react/20/solid';
 import { CartContext } from '../../Context/CartContext';
 import toast from 'react-hot-toast';
@@ -17,9 +17,9 @@ function ProductDetails() {
         features: [],
         images: []
     });
+    const navigate = useNavigate();
 
-    const location = useLocation()
-    const { productData } = location.state;
+    const location = useLocation();
 
     const [qty, setQty] = useState(0);
     const [displayImg, setDisplayImg] = useState();
@@ -47,9 +47,14 @@ function ProductDetails() {
     }
 
     useEffect(() => {
-        let discountedPrice = productData.price - (productData.discount / 100 * productData.price);
-        setProduct({ ...productData, discountedPrice: discountedPrice })
-        setDisplayImg(productData.images[0])
+        if (location && location.state) {
+            const { productData } = location.state;
+            let discountedPrice = productData.price - (productData.discount / 100 * productData.price);
+            setProduct({ ...productData, discountedPrice: discountedPrice })
+            setDisplayImg(productData.images[0])
+        } else {
+            navigate('/shop')
+        }
     }, [])
 
     return (

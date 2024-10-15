@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../Context/CartContext'
+import useAuthentication from '../CustomHooks/useAuthentication';
 
 function Cart() {
 
@@ -13,19 +14,24 @@ function Cart() {
         total: 0
     })
 
+    const { checkLoginStatus } = useAuthentication()
+
     useEffect(() => {
+        checkLoginStatus();
+
+
         setCartDetails(getCartData())
 
         let subTotalPrice = 0;
         let totalDiscount = 0;
         let totalPrice = 0;
 
-    Array.from(cartDetails, ([id, data]) => {
+        Array.from(cartDetails, ([id, data]) => {
             subTotalPrice += data.price;
             totalDiscount += data.discount;
         })
 
-        
+
         // setPricingDetails
 
     }, [getCartData])

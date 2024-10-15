@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +7,7 @@ function useAuthentication() {
 
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const login = (uName, uPass) => {
 
@@ -64,8 +65,43 @@ function useAuthentication() {
         navigate('/login')
     }
 
-    const checkLoginStatus = () => {
 
+    const checkLoginStatus = async () => {
+
+        // get the auth details from local storage
+        let authObj = JSON.parse(localStorage.getItem('userAuthDetails'));
+        // validate auth details
+        if (authObj && authObj.loginStatus) {
+
+            // Call verifyToken API
+            await axios.get(`${API_BASE_URL}/auth/api/verifyToken`, {
+                headers: {
+                    token: authObj.token
+                }
+            }).then(resp => {
+                console.log(resp);
+                if (resp.status === 200 && resp.data.status === "Authorized") {
+                }
+            }).catch(error => {
+                // set error message in case of error
+                console.log(error);
+                toast('Session has expire, please re-login.', {
+                    duration: 5000,
+                    icon: '❌',
+                    position: 'top-center'
+                })
+                // remove userAuth object from localStorage
+                localStorage.removeItem('userAuthDetails');
+                navigate('/login');
+            })
+        } else {
+            toast('Please login.', {
+                duration: 3000,
+                icon: 'ℹ',
+                position: 'top-center'
+            })
+            navigate('/login')
+        }
     }
 
     return {

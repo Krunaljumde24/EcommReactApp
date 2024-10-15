@@ -34,7 +34,20 @@ function Header() {
     {
       item: 'Blog',
       to: '/blog'
+    },
+    {
+      item: 'Setting',
+      to: '/settings'
+    },
+    {
+      item: 'Cart',
+      to: '/cart'
+    },
+    {
+      item: 'ProductDetails',
+      to: '/productDetails'
     }
+
   ]
 
   useEffect(() => {
@@ -130,79 +143,6 @@ function Header() {
                   Logout
                 </button>
               </div>
-            </div>
-          </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div className="relative ml-3">
-              <div className="flex">
-                <Link to='/cart' replace={true}>
-                  <button type="button" className="mr-2 relative inline-flex justify-center items-center  text-sm font-semibold rounded-lg border text-gray-800 shadow-sm  ">
-                    <ShoppingCartIcon width='2rem' height='2rem' />
-                    <span className="absolute top-0 end-0 inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium transform -translate-y-1/2 translate-x-1/2 bg-red-500 text-white">99+</span>
-                  </button>
-                </Link>
-                <button
-                  type="button"
-                  className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  id="user-menu-button"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                  onClick={() => setClick(!click)}
-                >
-                  <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src={profileIcon}
-                    alt=""
-                  />
-                </button>
-              </div>
-              {click ? (
-                <div
-                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none  transform transition ease-in-out duration-300"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="user-menu-button"
-                  tabIndex="-1"
-                >
-                  {isLoggedIn ? <>
-                    {loggedInNavLinks.map((links, index) => {
-                      return (
-                        <Link
-                          key={index}
-                          to={links.to}
-                          className="block px-4 py-2 text-sm text-gray-700"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="user-menu-item-0"
-                          onClick={() => setClick(!click)}
-                        >
-                          {links.item}
-                        </Link>
-                      )
-                    })}
-                  </> : <>
-                    {loggedOutNavLinks.map((links, index) => {
-                      return (
-                        <Link
-                          key={index}
-                          to={links.to}
-                          className="block px-4 py-2 text-sm text-gray-700"
-                          role="menuitem"
-                          tabIndex="-1"
-                          id="user-menu-item-1"
-                          onClick={() => setClick(!click)}
-                        >
-                          {links.item}
-                        </Link>
-                      )
-                    })}
-                  </>}
-                </div>
-              ) : (
-                <></>
-              )}
             </div>
           </div>
         </div>
