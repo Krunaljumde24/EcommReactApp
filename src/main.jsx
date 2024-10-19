@@ -11,7 +11,6 @@ import {
 import Login from "./component/Auth/Login.jsx";
 import SignUp from "./component/Auth/SignUp.jsx";
 import ResetPassword from "./component/Auth/ResetPassword.jsx";
-import { LoginProvider } from "./Context/LoginContext.jsx";
 import Profile from "./component/Account/Profile.jsx";
 import Test from "./component/Test.jsx";
 import Test2 from "./component/Test2.jsx";
@@ -28,6 +27,7 @@ import ProductDetails from "./component/products/ProductDetails.jsx";
 import Test3 from "./component/Test3.jsx";
 import Test4 from './component/Test4.jsx';
 import { CartContextProvider } from "./Context/CartContext.jsx";
+import { AuthContextProvider } from "./Context/AuthContext.jsx";
 
 
 const router = createBrowserRouter(
@@ -56,9 +56,10 @@ const router = createBrowserRouter(
   )
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <LoginProvider>
+  <AuthContextProvider>
     <CartContextProvider>
       <RouterProvider router={router} />
     </CartContextProvider>
-  </LoginProvider>
+  </AuthContextProvider>
+
 );

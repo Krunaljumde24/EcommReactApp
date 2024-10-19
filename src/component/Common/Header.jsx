@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import profileIcon from "../../assets/profile-icon1.png";
 import logo from "../../assets/logo.png";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 import useAuthentication from "../../CustomHooks/useAuthentication";
+import { AuthContext } from "../../Context/AuthContext";
 
 function Header() {
-  const [click, setClick] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigate = useNavigate();
   const { logout } = useAuthentication();
+
+  const { isUserLoggedIn } = useContext(AuthContext);
 
   const loggedInNavLinks = [{ item: 'Your Profile', to: '/profile' }, { item: 'Settings', to: '/settings' }, { item: 'Sign Out', to: '/signout' }];
 
@@ -28,7 +29,7 @@ function Header() {
       to: '/shop'
     },
     {
-      item: 'Contact Us',
+      item: 'ContactUs',
       to: '/contactus'
     },
     {
@@ -127,21 +128,25 @@ function Header() {
                     </Link>
                   )
                 })}
-                <button className="rounded-md px-3 py-2 text-sm font-medium text-red-400 bg-white hover:bg-gray-700 hover:text-white"
-                  onClick={() => navigate('/login')}
-                >
-                  Login
-                </button>
-
-                <button
-                  className="rounded-md px-3 py-2 text-sm font-medium
+                {
+                  isUserLoggedIn
+                    ?
+                    <button
+                      className="rounded-md px-3 py-2 text-sm font-medium
                  text-red-400 bg-white hover:bg-gray-700 
                  hover:text-white"
 
-                  onClick={() => logout()}
-                >
-                  Logout
-                </button>
+                      onClick={() => logout()}
+                    >
+                      Logout
+                    </button>
+                    :
+                    <button className="rounded-md px-3 py-2 text-sm font-medium text-red-400 bg-white hover:bg-gray-700 hover:text-white"
+                      onClick={() => navigate('/login')}
+                    >
+                      Login
+                    </button>
+                }
               </div>
             </div>
           </div>

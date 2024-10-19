@@ -1,59 +1,86 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import AccountInput from "./AccountInput";
 import useCustomForm from "../../CustomHooks/useCustomForm"
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import useAuthentication from "../../CustomHooks/useAuthentication";
+import { AuthContext } from "../../Context/AuthContext";
 
 function AccountSetting() {
 
-  const { userDetails, handleInputChange, resetForm, setUserDetails } = useCustomForm();
+  const { userDetails, handleInputChange, setUserDetails } = useCustomForm();
+  const { isUserLoggedIn } = useContext(AuthContext);
+  const { checkLoginStatus, getLoggedInUserDetails } = useAuthentication();
 
-  const { checkLoginStatus } = useAuthentication();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const updateAccountDetails = (event) => {
     event.preventDefault();
+    let userObj = {
+      fName: userDetails.firstName,
+      lName: userDetails.lastName,
+      uName: userDetails.username,
+      email: userDetails.email,
+      phone: userDetails.phoneNumber,
+      dob: userDetails.dob,
+      gender: userDetails.gender,
+      address: userDetails.address,
+      country: userDetails.country,
+      state: userDetails.state,
+      city: userDetails.city,
+      zipcode: userDetails.zipcode,
+    }
+
+    userObj.dob = new Date(Date.parse(userObj.dob));
+
+    console.log(userObj);
+
+    axios
+      .post(`${API_BASE_URL}/user/api/update-user-details`, userObj)
+      .then(resp => {
+        console.log(resp);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   useEffect(() => {
-    if (checkLoginStatus()) {
-      console.log('checkLoginStatus passed');
-
-      axios.post('http://localhost:8080/user/api/get-user-details', {
-        "username": "kjumde1",
-        "email": "krunaljumde@gmail.com"
-      }).then((resp) => {
-        console.log(resp.data);
-        let data = resp.data;
-        setUserDetails(
-          {
-            ...userDetails,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            username: data.username,
-            email: data.email,
-            phone: data.phoneNumber,
-            dob: data.dateOfBirth,
-            gender: data.gender,
-            address: data.address,
-            country: data.country,
-            state: data.state,
-          }
-        )
-      }).catch((err) => {
-        console.log(err);
-      })
+    checkLoginStatus();
+    if (isUserLoggedIn) {
+      const userObj = getLoggedInUserDetails();
+      if (userObj && Object.keys(userObj).length > 0) {
+        axios.post(`${API_BASE_URL}/user/api/get-user-details`, {
+          "username": userObj.username
+        }).then((resp) => {
+          let data = resp.data;
+          setUserDetails(
+            {
+              ...userDetails,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              username: data.username,
+              email: data.email,
+              phone: data.phoneNumber,
+              dob: data.dateOfBirth,
+              gender: data.gender,
+              address: data.address,
+              country: data.country,
+              state: data.state,
+            }
+          )
+        }).catch((err) => {
+          console.log(err);
+        })
+      }
     } else {
       console.log('checkLoginStatus failed');
-
     }
-  }, [])
+  }, [isUserLoggedIn])
 
 
   return (
     <>
-      {checkLoginStatus() ?
+      {isUserLoggedIn ?
         <div className="w-full px-24 pt-4">
           <h2 className="text-xl font-bold">Account Setting</h2>
           <p className="text-sm">
@@ -123,6 +150,8 @@ function AccountSetting() {
                   />
                 </div>
                 <div className="mt-4 grid grid-cols-6">
+
+
                   <AccountInput
                     id="dob"
                     name="dob"

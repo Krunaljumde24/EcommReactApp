@@ -1,6 +1,6 @@
 import React from "react";
 
-function AccountInput({ id, name, label, type, register, value, handleChange, disabled }) {
+function AccountInput({ id, name, label, type, value, handleChange, disabled }) {
 
   return (
     <div className="col-span-4 sm:col-span-2">

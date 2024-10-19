@@ -1,13 +1,16 @@
 import axios from "axios"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 function useAuthentication() {
 
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
     const navigate = useNavigate();
+
+    const { setIsUserLoggedIn } = useContext(AuthContext);
 
     const login = (uName, uPass) => {
 
@@ -32,6 +35,8 @@ function useAuthentication() {
                     }
                     // Set user auth details in localStorage
                     localStorage.setItem('userAuthDetails', JSON.stringify(userObj))
+
+                    setIsUserLoggedIn(true)
 
                     // Navigate to other page
                     navigate('/shop')
@@ -62,6 +67,7 @@ function useAuthentication() {
             icon: 'ℹ',
             position: 'top-center'
         })
+        setIsUserLoggedIn(false)
         navigate('/login')
     }
 
@@ -79,8 +85,8 @@ function useAuthentication() {
                     token: authObj.token
                 }
             }).then(resp => {
-                console.log(resp);
                 if (resp.status === 200 && resp.data.status === "Authorized") {
+                    setIsUserLoggedIn(true)
                 }
             }).catch(error => {
                 // set error message in case of error
@@ -92,6 +98,7 @@ function useAuthentication() {
                 })
                 // remove userAuth object from localStorage
                 localStorage.removeItem('userAuthDetails');
+                setIsUserLoggedIn(false)
                 navigate('/login');
             })
         } else {
@@ -100,14 +107,19 @@ function useAuthentication() {
                 icon: 'ℹ',
                 position: 'top-center'
             })
+            setIsUserLoggedIn(false)
             navigate('/login')
         }
     }
 
+    const getLoggedInUserDetails = () =>
+        JSON.parse(localStorage.getItem('userAuthDetails'))
+
     return {
         login,
         logout,
-        checkLoginStatus
+        checkLoginStatus,
+        getLoggedInUserDetails
     }
 }
 
