@@ -53,6 +53,7 @@ function AccountSetting() {
           "username": userObj.username
         }).then((resp) => {
           let data = resp.data;
+          console.log(data)
           setUserDetails(
             {
               ...userDetails,
@@ -165,11 +166,17 @@ function AccountSetting() {
                     <label htmlFor="gender" className="block text-xs pb-2">
                       Gender
                     </label>
-                    <input type="radio" id="male" name="gender" value="male" onChange={(event) => handleInputChange(event)} />
+                    <input type="radio" id="male" name="gender" checked={userDetails.gender === 'male'} value="male" onChange={(event) => handleInputChange(event)} />
                     <label htmlFor="male" className="p-3 font-medium text-sm">
                       Male
                     </label>
-                    <input type="radio" id="female" name="gender" value="female" onChange={(event) => handleInputChange(event)} />
+                    <input
+                      type="radio"
+                      id="female"
+                      name="gender"
+                      checked={userDetails.gender === 'female'}
+                      value="female"
+                      onChange={(event) => handleInputChange(event)} />
                     <label htmlFor="female" className="p-3 font-medium text-sm">
                       Female
                     </label>
@@ -185,7 +192,7 @@ function AccountSetting() {
                     <textarea
                       id="address"
                       name="address"
-                      className="block w-3/5 rounded-lg border-1 py-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 "
+                      className="block w-3/5 rounded-lg border-1 px-3 py-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 "
                       value={userDetails.address}
                       onChange={(event) => handleInputChange(event)}
                     />

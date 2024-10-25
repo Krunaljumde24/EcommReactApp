@@ -2,7 +2,7 @@ import React from 'react'
 
 function RangeOfCategories() {
     return (
-        <div className='min-h-[400px] md:mx-44 my-20'>
+        <div className='min-h-[400px] md:px-44 md:py-10 bg-slate-100'>
             <h4 className='my-4 text-2xl md:w-2/3 font-bold text-center mx-auto'>
                 View Our Range Of Categories
             </h4>

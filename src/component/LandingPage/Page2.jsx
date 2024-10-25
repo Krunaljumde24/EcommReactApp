@@ -2,7 +2,7 @@ import React from 'react'
 
 function Page2() {
   return (
-    <div className='bg-slate-500 min-h-[300px] md:px-40 px-10 my-20 py-10 flex flex-row text-white'>
+    <div className='bg-slate-500 min-h-[300px] md:px-40 px-10 py-10 flex flex-row text-white'>
 
       <div className='basis-1/2'>
         <h4 className='text-2xl font-bold mb-3'>
